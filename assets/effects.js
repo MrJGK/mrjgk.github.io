@@ -4,6 +4,7 @@
   const root = document.documentElement;
   const header = document.querySelector('.site-header');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const motionIsPaused = () => reducedMotion.matches || root.classList.contains('motion-paused');
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
   const revealElements = Array.from(document.querySelectorAll('[data-reveal]'));
   const cards = Array.from(document.querySelectorAll('.project-card'));
@@ -23,7 +24,7 @@
   }
 
   function prepareReveals() {
-    if (reducedMotion.matches || !('IntersectionObserver' in window)) {
+    if (motionIsPaused() || !('IntersectionObserver' in window)) {
       revealEverything();
       return;
     }
@@ -74,7 +75,7 @@
     const scrollRange = Math.max(0, root.scrollHeight - window.innerHeight);
     const progress = scrollRange ? Math.min(1, scrollY / scrollRange) : 0;
     root.style.setProperty('--scroll-progress', String(progress));
-    root.style.setProperty('--ambient-shift', reducedMotion.matches ? '0px' : `${Math.min(scrollY * 0.045, 95).toFixed(2)}px`);
+    root.style.setProperty('--ambient-shift', motionIsPaused() ? '0px' : `${Math.min(scrollY * 0.045, 95).toFixed(2)}px`);
     if (header) header.classList.toggle('is-scrolled', scrollY > 18);
 
     const marker = (header ? header.getBoundingClientRect().height : 80) + 90;
@@ -109,7 +110,7 @@
 
     function paintPointer() {
       pointerFrame = 0;
-      if (reducedMotion.matches || !finePointer.matches) return;
+      if (motionIsPaused() || !finePointer.matches) return;
       const bounds = card.getBoundingClientRect();
       if (!bounds.width || !bounds.height) return;
       const x = Math.min(1, Math.max(0, (pointerX - bounds.left) / bounds.width));
@@ -122,7 +123,7 @@
     }
 
     card.addEventListener('pointermove', (event) => {
-      if (event.pointerType !== 'mouse' || reducedMotion.matches || !finePointer.matches) return;
+      if (event.pointerType !== 'mouse' || motionIsPaused() || !finePointer.matches) return;
       pointerX = event.clientX;
       pointerY = event.clientY;
       if (!pointerFrame) pointerFrame = window.requestAnimationFrame(paintPointer);
@@ -134,7 +135,7 @@
 
   function onMotionChange() {
     resetCards.forEach((reset) => reset());
-    if (reducedMotion.matches) revealEverything();
+    if (motionIsPaused()) revealEverything();
     else prepareReveals();
     queueScrollUpdate();
   }
@@ -146,6 +147,7 @@
     reducedMotion.addListener(onMotionChange);
   }
 
+  document.addEventListener('site:motion-change', onMotionChange);
   document.addEventListener('focusin', (event) => {
     if (event.target instanceof Element) reveal(event.target.closest('[data-reveal]'));
   });
