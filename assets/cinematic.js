@@ -61,40 +61,38 @@
       uniform vec2 u_resolution;
       uniform vec2 u_pointer;
       uniform float u_time;
+      uniform float u_scroll;
 
-      float hash(float n) { return fract(sin(n * 127.1) * 43758.5453); }
       void main() {
         vec2 uv = gl_FragCoord.xy / u_resolution;
         float aspect = u_resolution.x / u_resolution.y;
-        vec2 p = (uv - vec2(0.73, 0.53)) * vec2(aspect, 1.0);
-        p -= u_pointer * vec2(0.025, 0.018);
-        p.x += p.y * 0.21;
-        float angle = atan(p.y, p.x);
-        float radius = length(p * vec2(0.88, 1.0));
-        float wave = sin(angle * 3.0 + u_time * 0.21) * 0.016;
-        wave += sin(angle * 5.0 - u_time * 0.13) * 0.009;
-        float orbit = abs(radius - (0.34 + wave));
-        float secondOrbit = abs(radius - (0.405 - wave * 0.45));
-        float thread = pow(0.0035 / (orbit + 0.0035), 1.6);
-        float secondThread = pow(0.0018 / (secondOrbit + 0.0018), 1.5);
-        float light = 0.017 / (orbit + 0.065);
-        float rim = 0.4 + 0.6 * pow(0.5 + 0.5 * sin(angle * 2.0 - u_time * 0.17), 2.0);
-        float strength = thread * rim * 0.34 + secondThread * 0.12 + light * 0.16;
-
-        float dust = 0.0;
-        for (int i = 0; i < 12; i++) {
-          float fi = float(i);
-          vec2 seed = vec2(hash(fi + 1.2), hash(fi + 8.7));
-          vec2 position = vec2(seed.x, fract(seed.y + u_time * (0.0015 + seed.x * 0.001)));
-          vec2 delta = (uv - position) * vec2(aspect, 1.0);
-          float distanceToDust = length(delta);
-          dust += (1.0 - smoothstep(0.0005, 0.003, distanceToDust)) * 0.15;
+        vec2 p = uv + u_pointer * vec2(0.018, 0.012);
+        float scrollShift = min(u_scroll, 4.0) * 0.013;
+        float signal = 0.0;
+        float glow = 0.0;
+        for (int i = 0; i < 8; i++) {
+          float lane = float(i);
+          float phase = lane * 0.48;
+          float curve = 0.24 + lane * 0.043 + scrollShift;
+          curve += sin(p.x * 6.0 + u_time * 0.12 + phase) * 0.052;
+          curve += cos(p.x * 11.0 - u_time * 0.08 + phase) * 0.019;
+          float distanceToLane = abs(p.y - curve);
+          float beam = pow(0.0014 / (distanceToLane + 0.0014), 1.45);
+          float pulse = pow(0.5 + 0.5 * sin(p.x * 9.0 - u_time * 0.6 + phase), 9.0);
+          signal += beam * (0.055 + pulse * 0.16);
+          glow += 0.0005 / (distanceToLane + 0.045);
         }
 
-        vec3 mint = mix(vec3(0.50, 0.85, 0.72), vec3(0.78, 0.98, 0.55), 0.5 + 0.5 * sin(angle + 0.6));
-        float edgeFade = smoothstep(0.0, 0.18, uv.x) * (1.0 - smoothstep(0.87, 1.0, uv.y));
-        float alpha = clamp((strength + dust) * edgeFade, 0.0, 0.42);
-        gl_FragColor = vec4(mint * alpha, alpha);
+        vec2 grid = vec2(p.x * aspect, p.y) * 22.0;
+        vec2 cell = fract(grid) - 0.5;
+        float dotField = 1.0 - smoothstep(0.018, 0.052, length(cell));
+        float gridFade = (1.0 - smoothstep(0.0, 0.5, abs(p.y - 0.4))) * 0.032;
+        float edgeFade = smoothstep(0.12, 0.48, uv.x);
+        edgeFade *= 1.0 - smoothstep(0.87, 1.0, uv.x);
+        edgeFade *= 1.0 - smoothstep(0.7, 0.96, uv.y);
+        vec3 color = mix(vec3(0.52, 0.86, 0.70), vec3(0.82, 1.0, 0.31), smoothstep(0.2, 0.9, uv.x));
+        float alpha = clamp((signal + glow * 0.3 + dotField * gridFade) * edgeFade, 0.0, 0.35);
+        gl_FragColor = vec4(color * alpha, alpha);
       }
     `;
 
@@ -140,6 +138,7 @@
     const resolution = gl.getUniformLocation(program, 'u_resolution');
     const pointer = gl.getUniformLocation(program, 'u_pointer');
     const time = gl.getUniformLocation(program, 'u_time');
+    const scroll = gl.getUniformLocation(program, 'u_scroll');
     function resize() {
       // The light is intentionally soft: cap both density and dimensions, especially on phones.
       const scale = Math.min(window.devicePixelRatio || 1, 1.25, 1280 / Math.max(window.innerWidth, window.innerHeight));
@@ -158,6 +157,7 @@
       draw(seconds, x, y) {
         if (gl.isContextLost()) return;
         gl.uniform1f(time, seconds);
+        gl.uniform1f(scroll, Math.max(0, window.scrollY || 0) / Math.max(1, window.innerHeight));
         gl.uniform2f(pointer, x, y);
         gl.drawArrays(gl.TRIANGLES, 0, 6);
       }
@@ -243,6 +243,12 @@
   });
   window.addEventListener('pagehide', stop);
   window.addEventListener('pageshow', applyPreference);
+  // Native same-origin page transitions keep normal links, browser history, and fallback navigation.
+  ['pageswap', 'pagereveal'].forEach((eventName) => {
+    window.addEventListener(eventName, (event) => {
+      if (!motionAllowed() && event.viewTransition) event.viewTransition.skipTransition();
+    });
+  });
   let resizeFrame = 0;
   window.addEventListener('resize', () => {
     if (resizeFrame) return;

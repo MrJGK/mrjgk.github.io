@@ -29,6 +29,7 @@
       return;
     }
     try {
+      if (revealObserver) revealObserver.disconnect();
       revealObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) reveal(entry.target);

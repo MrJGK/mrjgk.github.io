@@ -2,40 +2,47 @@
 
 Personal portfolio for Jami Veera Satya Sankara Gopalakrishna, a Diploma in Computer Engineering student at Andhra Polytechnic, Kakinada.
 
+Live at [mrjgk.github.io](https://mrjgk.github.io/).
+
 ## Website content
 
-- Introduction, skills, and education.
-- Email, LinkedIn, GitHub, and four Instagram profiles.
-- Scroll reveals, a reading-progress line, active section navigation, and pointer-responsive project cards.
-- A portrait-led homepage, full GitHub-photo background, procedural WebGL light effects, and pointer-responsive depth.
-- Automatic GitHub profile-photo refresh every five minutes while the page is visible, with refresh on returning to the page. The avatar is loaded directly from GitHub; no API token is stored or required.
-- Smooth anchor scrolling, responsive layouts, a persistent pause-effects control, and operating-system reduced-motion support.
-- A complete Network Monitoring and Visualization System project page, covering the topology contribution, 11 planned modules, technologies, workflow, integration, and progress.
-- A complete Priority-Based Internet Access Control project page, clearly identifying the current Python implementation as a simulation.
+- A bold introduction with a borderless GitHub photograph that fades into the background.
+- An asymmetric project gallery with a responsive topology illustration, moving connection signals on hover or keyboard focus, and a priority-policy preview.
+- Complete project pages for the Network Monitoring and Visualization System and Priority-Based Internet Access Control.
+- Skills and education, plus email, LinkedIn, GitHub, and four Instagram profiles.
 
-## Files
+The network-monitoring page distinguishes the user’s topology contribution from the broader system’s planned modules. The access-control page clearly identifies its Python implementation as a simulation.
+
+## Appearance and motion
+
+One shared stylesheet covers the homepage and project pages. The design combines dark surfaces, electric lime accents, oversized typography, scroll reveals, active navigation, and a page-progress line.
+
+The WebGL background draws moving signal paths that respond to pointer position and scrolling. Its drawing resolution and frame rate are capped; animation stops in hidden tabs. If WebGL is unavailable, the photographic background remains usable.
+
+Supported browsers use native same-origin view transitions between project titles and their full pages. Ordinary navigation remains available everywhere. A persistent pause-effects control and the operating system’s reduced-motion preference disable movement and skip page transitions.
+
+## GitHub profile photo
+
+The header portrait, hero photograph, and background use the verified GitHub avatar URL for account ID `302349533` (`MrJGK`). The page checks the current image every five minutes while visible and when the visitor returns. A shared refresh key avoids stale browser caching; GitHub’s own image propagation may still take time.
+
+No GitHub API token is stored or required. A new image is loaded successfully before replacing the displayed portrait. Failed refreshes retain the existing image; initials remain available if the initial photograph cannot load. The HTML contains a direct avatar URL so images also work without JavaScript.
+
+## Active files
 
 | File | Purpose |
 | --- | --- |
 | `index.html` | Portfolio homepage |
-| `projects/network-monitoring/index.html` | Network monitoring project |
-| `projects/priority-access-control/index.html` | Access-control project |
-| `assets/style.css` | Base responsive styling |
-| `assets/effects.css` | Visual refinements and motion styles |
-| `assets/effects.js` | Progressive scroll and pointer interactions |
-| `assets/cinematic.css` | Portrait layout and cinematic visual treatment |
-| `assets/cinematic.js` | Procedural light, pointer depth, and motion preference |
-| `assets/profile.js` | Refresh the shared GitHub portrait and background |
+| `projects/network-monitoring/index.html` | Full network monitoring project story |
+| `projects/priority-access-control/index.html` | Full access-control project story |
+| `assets/portfolio.css` | Shared responsive layout, visual design, and CSS motion |
+| `assets/effects.js` | Scroll reveals, section navigation, and project-card interactions |
+| `assets/cinematic.js` | WebGL signal paths, pointer depth, and motion preferences |
+| `assets/profile.js` | Automatic refresh of the shared GitHub photograph |
 | `assets/favicon.svg` | JGK browser icon |
-| `.nojekyll` | Serve static files without Jekyll processing |
+| `.nojekyll` | Publish static files without Jekyll processing |
 
 ## Publishing and editing
 
-This website uses plain HTML, CSS, and vanilla JavaScript and requires no installation, build, framework, or backend. GitHub Pages should publish from `main` and `/(root)` under **Settings → Pages → Deploy from a branch**. The site address is `https://mrjgk.github.io/`.
+The site uses plain HTML, CSS, and JavaScript. No installation, build framework, or backend is needed. GitHub Pages publishes from `main` and `/(root)` under **Settings → Pages → Deploy from a branch**.
 
-Edit the HTML pages to update content, `assets/style.css` for the base layout, and `assets/effects.css` and `assets/effects.js` for visual effects. The base avatar URL is included in HTML so the photo also works without JavaScript. A successfully displayed photo stays in place if a refresh fails; initials remain readable if the photo cannot load at all. WebGL effects fall back to the photographic background when unavailable. Content and navigation remain available with JavaScript disabled; motion respects the visitor’s reduced-motion preference. Open `index.html` in a browser for a local preview. Links are relative, and each project is a standalone page.
-
-See [GitHub’s publishing-source guide](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site).
-
-Project descriptions reflect the information shared through September 2026. The broader network-monitoring modules describe the system design; access-control decisions are currently simulated.
-
+Edit the HTML files for content and `assets/portfolio.css` for design. Keep project URLs relative and preserve the matching `view-transition-name` values when updating project titles. The photograph refresh and motion scripts enhance a site that remains readable and navigable without JavaScript.
