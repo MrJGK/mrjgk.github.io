@@ -447,3 +447,103 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline-color:#2457c5
  .footer-inner{flex-wrap:wrap}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}
+
+
+/* Dark portfolio theme — professional charcoal, soft white, and blue accents. */
+:root{color-scheme:dark;--bg:#0b0f14;--panel:#111821;--panel-2:#17212d;--ink:#f3f6fb;--muted:#aab6c5;--line:#293545;--accent:#79a7ff;--accent-cool:#79d5d0;--peach:#f3b77a}
+body{background:#0b0f14;color:#f3f6fb}
+.site-header,.site-header.is-scrolled{background:rgba(11,15,20,.9);border-color:#263140}
+.brand-avatar{background:#1a2738}
+.nav{background:rgba(18,25,35,.94);border-color:#2c394b}
+.nav a{color:#c4cfdd}
+.nav a:hover{background:#202c3b;color:#fff}
+.nav a[aria-current="location"]{background:#79a7ff;color:#0b1424}
+.scroll-progress{background:linear-gradient(90deg,#79a7ff,#79d5d0)}
+::selection{background:#79a7ff;color:#0b1424}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline-color:#79a7ff}
+.skip-link{background:#79a7ff;color:#08111f}
+.hero .eyebrow,.overline,.eyebrow{color:#aab8ca}
+.hero-identity{color:#eef3fb}
+.hero-edition{color:#8798ad}
+.hero h1{color:#f4f7fc}
+.title-accent,.accent,.connect-intro h2 .accent{color:#79a7ff}
+.hero-stop{color:#f4f7fc}
+.hero-description{color:#b0bdcd}
+.hero-description strong{color:#f0f4fa}
+.primary-action{background:#79a7ff;border-color:#79a7ff;color:#091322;box-shadow:0 12px 38px -18px rgba(121,167,255,.35)}
+.primary-action:hover{background:#a5c3ff}
+.secondary-action{color:#d9e4f3;border-color:#43556d}
+.secondary-action:hover{color:#9dbdff}
+.hero-context{color:#9aa9bb}
+.hero-context span+span{border-color:#354457}
+.github-profile{background:#111821;border-color:#293545;box-shadow:0 10px 35px rgba(0,0,0,.16)}
+.github-profile-photo{background:#1a2738;border-color:#35465c}
+.github-profile-name{color:#f3f6fb}
+.github-profile-role{color:#aab6c5}
+.github-profile-link{border-color:#35465c;color:#cbdcff}
+.github-profile-link:hover{background:#1a2635;border-color:#59749b}
+.hero-foot{border-color:#293545}
+.hero-foot>p{color:#aab6c5}
+.hero-foot>p>span{color:#6e8096}
+.hero-foot>a{color:#b1bfd0}
+.hero-foot svg{color:#79a7ff}
+.section{border-color:#293545}
+.section-title h2,.about-title h2,.connect-intro h2{color:#f3f6fb}
+.muted-heading,.section-title .overline,.about-title .overline,.connect-intro .overline{color:#9eacbe}
+.work-count{color:#79a7ff}
+.work-count span{color:#9eacbe}
+.project-card{background:#111821;border-color:#293545;box-shadow:0 4px 18px rgba(0,0,0,.16)}
+.project-card:hover,.project-card:focus-visible{border-color:#5475a5;box-shadow:0 12px 30px rgba(0,0,0,.28)}
+.project-cover,.project-cover.priority{background:#131c27;border-color:#293545}
+.cover-caption{color:#c3cede}
+.cover-caption span:last-child{color:#95a5b9}
+.network-preview{background:#0e151e;border-color:#2b3a4d}
+.preview-heading,.preview-footer{border-color:#293545;color:#bdc9d8}
+.preview-label,.preview-footer>span:last-child{color:#79a7ff}
+.network-links{color:#526781}
+.network-packets{display:initial;color:#79a7ff;stroke:#79a7ff;opacity:.6}
+.network-nodes{fill:#151f2b;stroke:#50647e}
+.network-node-labels{fill:#e1e9f4}
+.project-card:hover .network-nodes{fill:#1a2b40;stroke:#79a7ff}
+.project-card:hover .network-preview,.project-card:focus-visible .network-preview{border-color:#5475a5}
+.threshold-display>span{color:#c3cede}
+.threshold-display>strong{color:#f3f6fb}
+.threshold-display>strong>span{color:#79a7ff}
+.meter{background:#2a3646}
+.meter:after{background:#79a7ff}
+.meter-label{color:#9eacbe}
+.rule-line{color:#c3cede}
+.state-allow{color:#8de0b0;background:#14291f;border-color:#28553d}
+.state-restrict{color:#ffc18d;background:#302116;border-color:#63432b}
+.project-body h3{color:#f0f4fa}
+.project-card:hover h3{color:#9dbdff}
+.project-body>p{color:#aab6c5}
+.card-meta{color:#9eacbe}
+.card-meta .index{color:#79a7ff}
+.badge{border-color:#28553d;color:#8de0b0;background:#14291f}
+.badge.warm{border-color:#63432b;color:#ffc18d;background:#302116}
+.tags li{background:#17212d;border-color:#2b394a;color:#c3cede}
+.tags li:hover{background:#1d2c40;border-color:#5475a5}
+.card-bottom{border-color:#293545;color:#9dbdff}
+.card-bottom .arrow{border-color:#35465c;color:#9dbdff}
+.project-card:hover .card-bottom .arrow{background:#79a7ff;color:#091322}
+.about-copy>p{color:#b7c3d1}
+.about-copy strong{color:#f3f6fb}
+.subheading{color:#aab6c5}
+.education-item{border-color:#293545}
+.education-item h3{color:#f3f6fb}
+.education-result{color:#79a7ff}
+.education-result span{color:#9eacbe}
+.connect-copy{color:#aab6c5}
+.contact-card,.social-link{background:#111821;border-color:#293545;box-shadow:none}
+.contact-card:hover,.social-link:hover{background:#17212d;border-color:#5475a5}
+.contact-card-top svg,.social-icon{color:#79a7ff}
+.contact-card>strong,.social-link strong{color:#f3f6fb}
+.contact-detail,.social-link small,.external-arrow,.instagram-heading{color:#aab6c5}
+.site-footer{border-color:#293545}
+.footer-inner p,.footer-inner a{color:#aab6c5}
+.footer-inner a:hover{color:#9dbdff}
+.site-atmosphere{background:#0b0f14}
+.background-shade{background:radial-gradient(ellipse at 80% 12%,rgba(82,127,204,.12),transparent 48%),radial-gradient(ellipse at 5% 70%,rgba(50,129,132,.08),transparent 45%)}
+.light-field{opacity:.5}
+@media(prefers-reduced-motion:reduce){.network-packets{display:none}}
