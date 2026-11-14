@@ -40,11 +40,3 @@ body{background:var(--bg);color:var(--ink)}
 @media(max-width:680px){.project-card{transform:none!important}.will-reveal{transform:translateY(16px)}}
 .motion-paused [data-scroll-blur]{filter:none!important}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.will-reveal,.will-reveal.is-visible{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}[data-scroll-blur]{filter:none!important}.click-ripple{display:none}}
-
-/* Global mouse click feedback: subtle expanding halo at the exact click point. */
-.page-click-wave{position:fixed;z-index:9999;left:0;top:0;width:14px;height:14px;border:1.5px solid rgba(142,190,255,.9);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%) scale(.35);box-shadow:0 0 0 5px rgba(113,225,208,.08),0 0 22px rgba(110,165,255,.28);animation:page-click-wave .62s cubic-bezier(.16,1,.3,1) forwards}
-.page-click-wave:before,.page-click-wave:after{content:"";position:absolute;border:1px solid rgba(113,225,208,.58);border-radius:50%;inset:-8px;animation:page-click-wave-inner .62s ease-out forwards}
-.page-click-wave:after{inset:-17px;border-color:rgba(142,190,255,.34);animation-delay:.035s}
-@keyframes page-click-wave{0%{opacity:.95;transform:translate(-50%,-50%) scale(.35)}75%{opacity:.58}100%{opacity:0;transform:translate(-50%,-50%) scale(3.4)}}
-@keyframes page-click-wave-inner{0%{opacity:.75;transform:scale(.65)}100%{opacity:0;transform:scale(1.65)}}
-@media(prefers-reduced-motion:reduce){.page-click-wave{display:none!important}}
