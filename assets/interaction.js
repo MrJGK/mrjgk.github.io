@@ -9,7 +9,16 @@ function paintPointer(){pointerFrame=0;if(paused()||!fine.matches)return;pointer
 window.addEventListener('pointermove',event=>{if(event.pointerType!=='mouse'||paused()||!fine.matches)return;pendingX=event.clientX;pendingY=event.clientY;if(!pointerFrame)pointerFrame=requestAnimationFrame(paintPointer)},{passive:true});
 function paintScroll(){scrollFrame=0;const y=window.scrollY||0,speed=Math.min(Math.abs(y-lastY)*.035,1.05);lastY=y;const amount=paused()?0:speed;blurTargets.forEach(node=>node.style.setProperty('--scroll-blur',amount.toFixed(2)+'px'));if(amount>0)window.setTimeout(()=>{if(!paused())blurTargets.forEach(node=>node.style.setProperty('--scroll-blur','0px'))},100)}
 window.addEventListener('scroll',()=>{if(!scrollFrame)scrollFrame=requestAnimationFrame(paintScroll)},{passive:true});
-document.addEventListener('click',event=>{if(paused()||!fine.matches||!(event.target instanceof Element))return;const target=event.target.closest('a,button');if(!target||target.matches('[data-motion-toggle]')||target.closest('.nav,.case-nav'))return;const rect=target.getBoundingClientRect(),ripple=document.createElement('span');ripple.className='click-ripple';ripple.setAttribute('aria-hidden','true');ripple.style.left=(event.clientX-rect.left)+'px';ripple.style.top=(event.clientY-rect.top)+'px';target.appendChild(ripple);ripple.addEventListener('animationend',()=>ripple.remove(),{once:true})});
+document.addEventListener('click',event=>{
+ if(paused()||!fine.matches)return;
+ const wave=document.createElement('span');
+ wave.className='page-click-wave';
+ wave.setAttribute('aria-hidden','true');
+ wave.style.left=event.clientX+'px';
+ wave.style.top=event.clientY+'px';
+ document.body.appendChild(wave);
+ wave.addEventListener('animationend',()=>wave.remove(),{once:true});
+});
 document.addEventListener('site:motion-change',()=>{if(paused()){root.style.setProperty('--pointer-x','50%');root.style.setProperty('--pointer-y','20%');blurTargets.forEach(node=>node.style.setProperty('--scroll-blur','0px'))}});
 if(typeof reduced.addEventListener==='function')reduced.addEventListener('change',()=>{if(paused())blurTargets.forEach(node=>node.style.setProperty('--scroll-blur','0px'))});
 })();
