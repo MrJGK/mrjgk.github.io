@@ -40,3 +40,13 @@ body{background:var(--bg);color:var(--ink)}
 @media(max-width:680px){.project-card{transform:none!important}.will-reveal{transform:translateY(16px)}}
 .motion-paused [data-scroll-blur]{filter:none!important}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.will-reveal,.will-reveal.is-visible{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}[data-scroll-blur]{filter:none!important}.click-ripple{display:none}}
+
+/* Sixth-effect set: animated role text and subtle, local control feedback. */
+.typing-phrase{display:inline-block;min-width:10ch;color:var(--accent);white-space:nowrap;transition:opacity .22s ease,filter .22s ease}
+.typing-phrase.is-typing-out{opacity:0;filter:blur(3px)}
+.typing-phrase.is-typing-in{animation:typing-arrive .32s var(--ease-out) both}
+@keyframes typing-arrive{from{opacity:0;filter:blur(3px);transform:translateY(3px)}to{opacity:1;filter:blur(0);transform:translateY(0)}}
+.interaction-clicked{animation:control-click .24s ease-out}
+@keyframes control-click{0%{filter:brightness(1);transform:scale(1)}45%{filter:brightness(1.16);transform:scale(.975)}100%{filter:brightness(1);transform:scale(1)}}
+@media(max-width:680px){.typing-phrase{white-space:normal;min-width:0}}
+@media(prefers-reduced-motion:reduce){.typing-phrase,.typing-phrase.is-typing-out,.typing-phrase.is-typing-in{animation:none!important;transition:none!important;opacity:1!important;filter:none!important;transform:none!important}.interaction-clicked{animation:none!important}}
